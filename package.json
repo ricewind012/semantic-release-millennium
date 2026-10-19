@@ -1,0 +1,20 @@
+{
+	"name": "@ricewind012/semantic-release-millennium",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"main": "./src/index.ts",
+	"dependencies": {
+		"@semantic-release/error": "^4.0.0",
+		"smol-toml": "^1.9.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.15",
+		"@semantic-release/exec": "^7.1.0",
+		"@semantic-release/git": "^11.0.1",
+		"@types/node": "^26.6.5",
+		"@types/semantic-release__error": "^3.0.3",
+		"@types/signale": "^1.4.7",
+		"semantic-release": "^25.0.9"
+	}
+}

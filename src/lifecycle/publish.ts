@@ -106,7 +106,7 @@ export async function publish(config = DEFAULT_CONFIG, ctx: PublishContext) {
 	await run("git", ["-C", submodulePath, "checkout", "--detach", targetCommit]);
 	const diff = await run(
 		"git",
-		["diff", "--cached", "--exit-code", ".gitmodules", submodulePath],
+		["diff", "--exit-code", "--quiet", ".gitmodules", submodulePath],
 		// returns 1 when there are not staged changes
 		{ allowedExitCodes: [1] },
 	);

@@ -117,7 +117,8 @@ export async function publish(config = DEFAULT_CONFIG, ctx: PublishContext) {
 
 	const firstRelease = version === "1.0.0";
 	const { plugin } = millenniumConfig.content;
-	const title = firstRelease ? `Update ${plugin.name}` : `Add ${plugin.name}`;
+	const title = firstRelease ? `Add ${plugin.name}` : `Update ${plugin.name}`;
+	await run("git", ["add", ".gitmodules", submodulePath]);
 	await runGitAsMe(login, email, ["commit", "-m", title]);
 	await runGitAsMe(login, email, ["push", "-u", "origin", prBranch]);
 

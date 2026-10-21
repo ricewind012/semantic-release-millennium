@@ -1,0 +1,8 @@
+{
+	"exports": "./src/index.ts",
+	"name": "@ricewind012/semantic-release-millennium",
+	"publish": {
+		"include": ["./src"]
+	},
+	"version": "1.0.2"
+}

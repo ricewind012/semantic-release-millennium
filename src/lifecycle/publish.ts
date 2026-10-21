@@ -115,9 +115,11 @@ export async function publish(config = DEFAULT_CONFIG, ctx: PublishContext) {
 
 	const firstRelease = version === "1.0.0";
 	const { plugin } = millenniumConfig.content;
-	const title = firstRelease ? `Add ${plugin.name}` : `Update ${plugin.name}`;
+	const commitMsg = firstRelease
+		? `Add ${plugin.name}`
+		: `Update ${plugin.name} to ${version}`;
 	await run("git", ["add", ".gitmodules", submodulePath]);
-	await runGitAsMe(login, email, ["commit", "-m", title]);
+	await runGitAsMe(login, email, ["commit", "-m", commitMsg]);
 	await runGitAsMe(login, email, ["push", "-u", "origin", prBranch]);
 
 	const msg = (() => {
@@ -135,6 +137,7 @@ export async function publish(config = DEFAULT_CONFIG, ctx: PublishContext) {
 		return;
 	}
 
+	const title = firstRelease ? `Add ${plugin.name}` : `Update ${plugin.name}`;
 	const templatePath = firstRelease
 		? "pull_request_template.md"
 		: join("PULL_REQUEST_TEMPLATE", "PLUGIN-UPDATE.md");

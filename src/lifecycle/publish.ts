@@ -84,7 +84,6 @@ export async function publish(config = DEFAULT_CONFIG, ctx: PublishContext) {
 	const submodules = await run(
 		"git",
 		["config", "-f", ".gitmodules", "--get", `submodule.${submodulePath}.path`],
-		// returns 1 when no submodule path matches
 		{ allowedExitCodes: [1] },
 	);
 	const hasSubmodules = submodules.code === 0;
@@ -107,7 +106,6 @@ export async function publish(config = DEFAULT_CONFIG, ctx: PublishContext) {
 	const diff = await run(
 		"git",
 		["diff", "--exit-code", "--quiet", ".gitmodules", submodulePath],
-		// returns 1 when there are not staged changes
 		{ allowedExitCodes: [1] },
 	);
 	if (diff.code === 0) {
@@ -138,8 +136,8 @@ export async function publish(config = DEFAULT_CONFIG, ctx: PublishContext) {
 	}
 
 	const templatePath = firstRelease
-		? join("PULL_REQUEST_TEMPLATE", "PLUGIN-UPDATE.md")
-		: "pull_request_template.md";
+		? "pull_request_template.md"
+		: join("PULL_REQUEST_TEMPLATE", "PLUGIN-UPDATE.md");
 	const template = await readFile(join(".github", templatePath), "utf8");
 	const body = template
 		.replace("# REPLACE_WITH_PLUGIN_NAME", `# ${plugin.name}`)

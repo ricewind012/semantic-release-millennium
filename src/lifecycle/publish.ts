@@ -79,7 +79,7 @@ export async function publish(config = DEFAULT_CONFIG, ctx: PublishContext) {
 	]);
 	const prBranch = existingPrBranch || `${repoName}/v${version}`;
 	if (existingPrBranch) {
-		await run("git", ["pull", databaseBranch, existingPrBranch]);
+		await run("git", ["pull", "origin", existingPrBranch]);
 		await run("git", ["switch", prBranch, "FETCH_HEAD"]);
 	} else {
 		await run("git", ["switch", "-c", prBranch, "FETCH_HEAD"]);

@@ -78,7 +78,12 @@ export async function publish(config = DEFAULT_CONFIG, ctx: PublishContext) {
 		`[.[] | select(.headRefName | startswith("${repoName}/v")) | .headRefName] | first // empty`,
 	]);
 	const prBranch = existingPrBranch || `${repoName}/v${version}`;
-	await run("git", ["switch", "-c", prBranch, "FETCH_HEAD"]);
+	if (existingPrBranch) {
+		await run("git", ["pull", databaseBranch, existingPrBranch]);
+		await run("git", ["switch", prBranch, "FETCH_HEAD"]);
+	} else {
+		await run("git", ["switch", "-c", prBranch, "FETCH_HEAD"]);
+	}
 
 	const submodulePath = join("plugins", repoName);
 	const submodules = await run(
